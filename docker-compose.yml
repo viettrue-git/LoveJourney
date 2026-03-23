@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${DB_PASSWORD:-LoveJourney@2026}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$${MSSQL_SA_PASSWORD}" -Q "SELECT 1" -C -b
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: src/LoveJourney.Api/Dockerfile
+    ports:
+      - "5062:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Server=db;Database=LoveJourney;User Id=sa;Password=${DB_PASSWORD:-LoveJourney@2026};TrustServerCertificate=True"
+      Jwt__Secret: "${JWT_SECRET:-super-secret-key-change-in-production-at-least-32-chars}"
+      Jwt__Issuer: "LoveJourney"
+      Jwt__Audience: "LoveJourney"
+      Cors__AllowedOrigins__0: "http://localhost"
+    volumes:
+      - uploads:/app/wwwroot/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: love-journey-web
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  sqldata:
+  uploads:
