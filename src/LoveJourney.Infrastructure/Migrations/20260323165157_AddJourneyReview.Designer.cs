@@ -4,6 +4,7 @@ using LoveJourney.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoveJourney.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260323165157_AddJourneyReview")]
+    partial class AddJourneyReview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,55 +71,6 @@ namespace LoveJourney.Infrastructure.Migrations
                     b.HasIndex("CoupleId", "Date");
 
                     b.ToTable("anniversaries", (string)null);
-                });
-
-            modelBuilder.Entity("LoveJourney.Domain.Entities.BlogPost", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CoupleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CoverImageUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("PublishedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValue("draft");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CoupleId");
-
-                    b.HasIndex("Status", "PublishedAt")
-                        .IsDescending(false, true);
-
-                    b.ToTable("blog_posts", (string)null);
                 });
 
             modelBuilder.Entity("LoveJourney.Domain.Entities.Couple", b =>
@@ -464,17 +418,6 @@ namespace LoveJourney.Infrastructure.Migrations
                     b.Navigation("Couple");
                 });
 
-            modelBuilder.Entity("LoveJourney.Domain.Entities.BlogPost", b =>
-                {
-                    b.HasOne("LoveJourney.Domain.Entities.Couple", "Couple")
-                        .WithMany("BlogPosts")
-                        .HasForeignKey("CoupleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Couple");
-                });
-
             modelBuilder.Entity("LoveJourney.Domain.Entities.Journey", b =>
                 {
                     b.HasOne("LoveJourney.Domain.Entities.Couple", "Couple")
@@ -582,8 +525,6 @@ namespace LoveJourney.Infrastructure.Migrations
             modelBuilder.Entity("LoveJourney.Domain.Entities.Couple", b =>
                 {
                     b.Navigation("Anniversaries");
-
-                    b.Navigation("BlogPosts");
 
                     b.Navigation("Journeys");
 

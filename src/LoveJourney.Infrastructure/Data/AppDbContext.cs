@@ -12,8 +12,10 @@ public class AppDbContext : DbContext
     public DbSet<Journey> Journeys => Set<Journey>();
     public DbSet<Place> Places => Set<Place>();
     public DbSet<PlaceReview> PlaceReviews => Set<PlaceReview>();
+    public DbSet<JourneyReview> JourneyReviews => Set<JourneyReview>();
     public DbSet<Photo> Photos => Set<Photo>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,6 +45,8 @@ public class AppDbContext : DbContext
                 if (entry.Entity is Couple c) { c.CreatedAt = now; c.UpdatedAt = now; }
                 else if (entry.Entity is Journey j) { j.CreatedAt = now; j.UpdatedAt = now; }
                 else if (entry.Entity is PlaceReview r) { r.CreatedAt = now; r.UpdatedAt = now; }
+                else if (entry.Entity is JourneyReview jr) { jr.CreatedAt = now; jr.UpdatedAt = now; }
+                else if (entry.Entity is BlogPost bp) { bp.CreatedAt = now; bp.UpdatedAt = now; }
                 else if (entry.Entity is Anniversary a) a.CreatedAt = now;
                 else if (entry.Entity is Place p) p.CreatedAt = now;
                 else if (entry.Entity is Photo ph) ph.CreatedAt = now;
@@ -53,6 +57,8 @@ public class AppDbContext : DbContext
                 if (entry.Entity is Couple c) c.UpdatedAt = now;
                 else if (entry.Entity is Journey j) j.UpdatedAt = now;
                 else if (entry.Entity is PlaceReview r) r.UpdatedAt = now;
+                else if (entry.Entity is JourneyReview jr) jr.UpdatedAt = now;
+                else if (entry.Entity is BlogPost bp) bp.UpdatedAt = now;
             }
         }
     }

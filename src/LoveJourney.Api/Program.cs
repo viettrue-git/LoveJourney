@@ -26,10 +26,14 @@ builder.Services.AddScoped<PlaceService>(sp =>
     new PlaceService(sp.GetRequiredService<AppDbContext>()));
 builder.Services.AddScoped<ReviewService>(sp =>
     new ReviewService(sp.GetRequiredService<AppDbContext>()));
+builder.Services.AddScoped<JourneyReviewService>(sp =>
+    new JourneyReviewService(sp.GetRequiredService<AppDbContext>()));
 builder.Services.AddScoped<PhotoService>(sp =>
     new PhotoService(sp.GetRequiredService<AppDbContext>(), sp.GetRequiredService<LoveJourney.Application.Common.Interfaces.IFileStorageService>()));
 builder.Services.AddScoped<AnniversaryService>(sp =>
     new AnniversaryService(sp.GetRequiredService<AppDbContext>()));
+builder.Services.AddScoped<BlogPostService>(sp =>
+    new BlogPostService(sp.GetRequiredService<AppDbContext>()));
 builder.Services.AddScoped<DashboardService>(sp =>
     new DashboardService(sp.GetRequiredService<AppDbContext>(), sp.GetRequiredService<AnniversaryService>()));
 

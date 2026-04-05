@@ -81,7 +81,11 @@ public class JourneyService
                     Longitude = p.Longitude,
                     Category = p.Category,
                     Rating = p.Review != null ? p.Review.Rating : null
-                }).ToList()
+                }).ToList(),
+                Rating = j.Review != null ? j.Review.Rating : null,
+                ReviewText = j.Review != null ? j.Review.ReviewText : null,
+                Highlights = j.Review != null ? j.Review.Highlights : null,
+                WouldRevisit = j.Review != null ? j.Review.WouldRevisit : null
             })
             .FirstOrDefaultAsync();
 

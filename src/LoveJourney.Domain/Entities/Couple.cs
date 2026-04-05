@@ -18,4 +18,5 @@ public class Couple
     public ICollection<Journey> Journeys { get; set; } = new List<Journey>();
     public ICollection<Photo> Photos { get; set; } = new List<Photo>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public ICollection<BlogPost> BlogPosts { get; set; } = new List<BlogPost>();
 }

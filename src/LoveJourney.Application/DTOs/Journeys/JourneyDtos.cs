@@ -34,6 +34,10 @@ public class JourneyResponse
 public class JourneyDetailResponse : JourneyResponse
 {
     public List<PlaceInJourneyResponse> Places { get; set; } = new();
+    public short? Rating { get; set; }
+    public string? ReviewText { get; set; }
+    public string? Highlights { get; set; }
+    public bool? WouldRevisit { get; set; }
 }
 
 public class PlaceInJourneyResponse
